@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	/* document.write('<h1>hello</h1>'); */
+	console.log('1');
+	window.alert('a'); //window생략가능 
+	
+	var box = document.getElementById('box'); // 아직 그려지지 않아서 못찾음 
+	box.innerHTML = 'Hellooo'; 
+</script>
+
+</head>
+<body>
+<div id ="box"></div> <!-- id가 박스인걸을 찾아라 인데 아직 div로 그리지도 않았는데 -->
+<div id ="box2"></div>
+
+<script>
+	/* document.write('<h2>hello</h2>'); */
+	console.log('2');
+	alert('b');
+	var box = document.getElementById('box2');
+	box.innerHTML = 'Hellooo'; //box가 현재 null이라서 실행이 안됌  <div id ="box"></div> 이걸 위에 올려줘야함 
+</script>
+
+
+</body>
+</html>
