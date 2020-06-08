@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	// var box = document.getElementById('box');//얘가 실행되는 시점에 body안에 div는 없으니깐 오류가 뜬다. 
+	//box.innerHTML = 'Hello' 
+	//그래서 해결하는 방법이 body onload 이벤트가 발생할때 
+	
+							
+	//1번 해결방법 
+	/* function aa() {
+		var box = document.getElementById('box');
+		box.innerHTML = 'Hello'
+	}
+	window.onload =aa; */
+							 
+	//2번 해결방법 
+	/*var aa = function() {
+		var box = document.getElementById('box');
+		box.innerHTML = 'Hello'
+	}
+	window.onload =aa;  */
+							 
+	//3번 익명함수방법 
+	window.onload = function(){
+		var box = document.getElementById('box');
+		box.innerHTML = 'Hello';
+	}
+	
+	var arr = [ 5,3,4,1,10 ] ;
+	console.log(arr);
+	
+	for (var i = 0; i < arr.length; i++) {
+		alert(arr[i]);
+	}
+	
+	
+</script>
+
+</head>
+<body>
+	<div id="box"> </div>
+</body>
+</html>

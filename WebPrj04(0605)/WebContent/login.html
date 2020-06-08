@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+		function input_check() {
+			var uid = document.getElementById('uid')
+			var pwd = document.getElementById('pwd')
+			if( uid.value == '' || pwd.value==''){ //자바의 문자열 비교는 equals지만 여기서는 == 
+				alert('아이디 비밀번호를 입력 확인하시오') //alert이 없으면 중괄호가 필요없지만 문장이 많으니깐 묶어준다.
+				return true;}
+			else
+				return false;
+			
+		}
+	</script>
+
+</head>
+
+
+<body> <!-- 1. form태그 아이디 비밀번호를 받아와서 내 컴퓨터에 보내는것 -->
+	<form action = "http://127.0.0.1:9090/WebPrj04(0605)/loginData.jsp" method = "GET"
+		onsubmit = "return input_check()"> <!-- onsubmit은 submit을 실행할때  -->
+	
+	아이디 <input type = "text" name = "userid" id="uid"><br><!-- request.getParameter는 name이 필시 필요하다. -->
+	암호 <input type = "password" name = "passwd" id="pwd"><br><!-- id는 스타일시트나   --><!-- 가장 큰 비교법은 id는 유일한 값이고 name은 중복가능  -->
+	<input type = "submit"/>
+	<!-- 2. request를 받아야하는데 자바스크립트는 이런 명령어가 없어서 사용불가하고 .jsp 로 자바명령어로 받는다.  -->
+</form>
+</body>
+</html>

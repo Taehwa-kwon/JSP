@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style> #box{ width:200px; height:200px; background-color:'yellow'; border : 1px solid;}
+
+}
+</style>
+
+<script>
+	function btnClick(){
+		var today = new Date();
+		
+		alert(today);
+		document.getElementById('demo').innerHTML = 
+			'<b style="color:red">' + today.toLocaleString() + '</b>'; <!-- 문서안에 id가 있는 element(태그)를 찾아서 .innerHTML = today; 안에 이걸 넣어라 -->
+	}
+	//함수(메소드)는 이 활동을 실행하는 목적이고 그 정보를 가져오는거는 getElementById인것 같네 
+	function bulb_onoff( sw ){
+		var img1 = document.getElementById('img1');
+		if ( sw == 'on')
+			img1.src = 'Images/pic_bulbon.gif';
+		if ( sw == 'off')
+			img1.src = 'Images/pic_bulboff.gif';
+	}
+	
+	<!--
+	function bulb_on() {
+		var img1 = document.getElementById('img1');
+		img1.src = 'Images/pic_bulbon.gif';
+	}
+	function bulb_Off(){
+		var img1 = document.getElementById('btnOn');
+		img1.src = 'images/pic_bulboff.gif';
+	}
+	-->
+	
+	function imgView( val ){
+		var img1 = document.getElementById('img1');
+		switch(val){
+		case 0: img1.style = 'display:none'; break;
+		case 1: img1.style = 'display:inline'; break;
+		default:
+		}
+	}
+	
+	function viewColor( color ) {
+		var box = document.getElementById('box');<!-- 문서안에 box가 있는 element(태그)를 찾아서 box라고 부른다.  -->
+		box.style.backgroundColor = color;
+	}
+</script>
+
+
+</head>
+
+
+<body>
+	<button onclick="btnClick()">Click Me Get Time</button><!-- 함수라는것은 어떤 과정을 모아놓은 조각 -->
+	<div id="demo"></div>
+	<!-- <button id = "btnOn" onclick="bulb_on()"> On</button>
+	<img src = "Images/pic_bulboff.gif" alt ="" id="img1"/>
+	<button id = "btnOff" onclick="bulb_off()"> Off</button>  -->
+
+ 	<button id = "btnOn" onclick="bulb_onoff('on')"> On</button>
+	<img src = "Images/pic_bulboff.gif" alt ="전구" id="img1"/> <!-- src는 경로고 alt는 이름이고 img는 변수명  -->
+	<button id = "btnOff" onclick="bulb_onoff('off')"> Off</button>  
+	
+	<hr>
+	<button id = "btnVisible" onclick="imgView(1)">Visible</button>
+	<button id = "btnInvisible" onclick="imgView(0)">InVisible</button>
+	
+	<hr>
+	<button id = "btnBgColorBlue" onclick="viewColor('blue')">Blue</button>
+	<button id = "btnBgColorRed" onclick="viewColor('red')">Red</button>
+	<div id = "box"></div>
+	
+</body>
+</html>
+

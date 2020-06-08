@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	input[type=text] {color:red;} /* input타입중에 type이 text인것들을 selector 라고 부른다.*/
+</style>
+<script>
+	// document.getElementById('')    - ID 속성을 사용 : 결과가 1개
+	// document.getElementsByTagName('')	-Tag이름을 사용 : input , div 등등  결과가 여러개(배열로 출력된다)
+	// document.getElementsByName('')		-Name 속성을 사용 : 결과 복수(배열로 출력된다)
+		//ex) var abc = document.getElementsByClassName('') 결과값이 하나라도 출력은 반드시 div[n]
+	// document.getElementsByClassName('')	-class=""속성을 사용 :
+		
+//복수전용	
+	// document.querySelector('input[type=text]')			- css selector 사용, 결과가 한개
+	// document.querySelectorAll('')		- css selector 사용, 결과가 복수(배열출력) 
+	
+	function inputInfo( e ) {
+		console.log( e );
+		var btn  = e.target;
+	//아이디	
+		var userid = document.getElementsByName('userid'); //1. name으로 찾으려면 이렇게 해야하고 출력은 배열로 출력되니깐.
+		var userid_v = userid[0].value; //1.1 배열을 출력하려면 이러한 방식을 사용
+		
+		var msg = userid_v + '\n'
+	//성별	
+		var gender = document.getElementsByName('gender');
+		//if(gender[0].checked) alert('남자\n');
+		//if(gender[1].checker) alert('여자\n');
+		if(gender[0].checked) msg += '남자\n'; 
+		if(gender[1].checked) msg += '여자\n';
+	//이름	
+		var input = document.getElementsByTagName('input');
+		var username = input[2].value; //이름의 Input은 2번째에 있다 (0.1.2)
+		msg += username + '\n';
+	//암호
+		var passwd = input[1].value;
+		msg += passwd + '\n';
+		
+	//전화번호
+		var tel = document.getElementsByClassName('tel'); 
+		var tel_v = tel[0].value + '- '+tel[1].value + '- '+tel[2].value ;
+		msg += tel_v + '\n';
+		
+		var email = document.querySelector('#email');
+		msg += email.value + '\n';
+	
+		
+		
+		alert(msg);
+		
+	}
+		
+		var hoobys = [
+			{ id: 'cbBasket' , value : '농구' },
+			{ id: 'cbSoccer' , value : '축구' }
+			];
+	
+	window.onload = function () {
+		var btnInfo = document.getElementById("btnInfo");
+		btnInfo.onclick = inputInfo;
+		
+		var btnHoobyAdd = document.querySelectorAll('input[value=\'취미추가\']');
+		//querySelector을 쓰면 한개만 들어가고 All은 배열로 들어간다. 그 다음 () 괄호안에 타입을 넣어준다. 
+		btnHoobyAdd[0].onclick=function(){
+		alert('btnHoobyAdd Clicked')
+		var divHooby = document.querySelectorAll('.hooby');
+		console.log(divHooby);
+		divHooby[0].innerHTML = '농구, 축구';
+		
+		
+//이걸 활용하면 1.문제   1)답1 2)답2 3)답3 4)답4 그래서 누르면 정답인지 아닌지 또 가능하네.. 근데 이것도 완성시키지 못함 ㅋㅋㅋ		
+		
+		var hoobyList = '';
+		hoobys.forEach( function(hobby, index, array){
+			hoobyList += '<input type="checkbox" name="hooby" value="'
+					+ hobby.value + '" id="'
+					+ hobby.id + '" />';
+			hoobyList += '<label for ="'
+					+ hobby.id + '">'
+					+ hobby.value + '</label>';
+		});
+		divHooby[1].innerHTML= hoobyList;
+	}
+	}
+</script>
+
+</head>
+<body>
+	<form action = "test01_proc.jsp" method="GET">
+		아이디 <input type="text" name="userid" /><br/>
+		비밀번호<input type="password" name="passwd" /><br/>
+		이름	<input type="text" name="username" /><br/>
+		이메일<input type="text" name="email" id="email"/><br/>
+		전화<input type="text" name="tel1" class="tel" /><br/>-
+		<input type="text" name="tel2" class="tel"/><br/>-
+		<input type="text" name="tel3" class="tel"/><br/>
+		성별<input type="radio" name="gender" id="man">남자
+		   <input type="radio" name="gender" id="woman" checked="checked">여자
+		
+		<div class="hooby"></div>
+		<div class="hooby">
+			<!-- <input type = "checkbox" name="hooby" value="농구" id="cbBasket"/>
+			<label for = "cbBasket">농구</label>
+			<input type = "checkbox" name="hooby" value="축구" id="cbSoccer"/>
+			<label for = "cbSoccer">축구</label> -->
+			</div>
+		
+		<input type = "submit" value = "회원가입" /> <!-- submit은 반드시 onsubmit을 발생시킨다.  -->
+		<input type = "image" src="" />
+		<button>가입</button>
+
+		<input type = "button" value = "취미추가" />
+		<input type = "button" value = "입력정보" id="btnInfo" />
+		
+	</form>
+</body>
+</html>

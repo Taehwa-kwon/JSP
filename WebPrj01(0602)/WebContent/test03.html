@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script>
+	/* document.write('<h1>hello</h1>'); */
+	console.log('1');
+	window.alert('a'); //window생략가능 
+	
+	var box = document.getElementById('box'); // 아직 그려지지 않아서 못찾음  이건 함수가 아니니깐..안되는거지 만약에
+	box.innerHTML = 'Hello'; 
+	
+	/* 이건 가능하지. 보면 box()는 함수인데 box라는 id를 가진 요소정보를 가져와서 변수 box1에 담아두고
+	다시 box1에 Hello를 집어넣잖아. 근데 함수니깐 아무도 호출안해서 사용할수는 없지만
+	window.onload가 body가 다 그려지면 실행하라는 명령어니깐 box()함수를 불러온다. 
+	function box() {
+		var box1 = document.getElementById('box')
+		box1.innerHTML = 'Hello'
+	}
+	window.onload= box;
+	 */
+		
+	}
+</script>
+
+</head>
+<body>
+<div id ="box"></div> <!-- id가 박스인걸을 찾아라 인데 아직 div로 그리지도 않았는데 -->
+<div id ="box2"></div>
+
+<script>
+	/* document.write('<h2>hello</h2>'); */
+	console.log('2');
+	alert('b');
+	var box2 = document.getElementById('box2');
+	box2.innerHTML = 'Hello123123oo'; //box가 현재 null이라서 실행이 안됌  <div id ="box"></div> 이걸 위에 올려줘야함 
+</script>
+
+
+</body>
+</html>
