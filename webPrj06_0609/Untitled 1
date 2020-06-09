@@ -1,0 +1,24 @@
+브라우저 관련 객체
+
+자바스크립트로 웹브라우저를 조작할수 있다. + HTML도 가능
+
+		window객체아래에
+	location(주소줄) , navigator(브라우저안에서 더 구체적인 화면) , history(뒤로가기,앞으로가기), screen(스크린) , document
+	
+html 페이지 이동방법
+1. get방식
+	&li; <a href=''>&gt;&lt; </a>&gt;
+
+2. get/post방식 
+	&li; <form action="">
+	&li; <input type="submit">
+	&li; <input type="image">
+	&li; <button</button>
+</form>
+
+3.javascript	: 페이지이동역할 (get방식의 페이지이동)
+	location.href='';
+
+4.javascript	: submit버튼을 구현 (get/post방식의 페이지 이동가능) 
+	document.forms[0].submit();
+
