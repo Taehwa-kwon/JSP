@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+		var hello = () => {
+			document.body.innerHTML += 'Hello';
+		}
+		//window.onload = hello; 이거랑  window.addEventListener('load',hello); 이거랑 같음 
+		window.addEventListener('load',hello);
+		//document.getElementByTagName('button')[0].addEventListnerer('click',hello);//버튼의 0번째를 찾아서  클릭했을때 헬로우를 찍어라
+		
+	</script>
+</head>
+<body>
+<button>click</button>
+<script>
+	var btn = document.getElementsByTagName('button')[0];
+	btn.addEventListener('click',hello);
+</script>
+
+</body>
+</html>

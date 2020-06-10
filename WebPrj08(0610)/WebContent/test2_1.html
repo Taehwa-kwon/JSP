@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	//객체를 생성하는 생성자 함수 : 객체 생성함요 
+		function Rectangle(width,height){
+			this.width = width;
+			this.height = height;
+			// Getter 값을 꺼내기 위함 
+			this.getWidth = function(){
+				return this.width;
+			}
+			this.getHeight = function(){
+				return this.height;
+			}
+			// Setter 값을 넣기위함 
+			this.setWidth = function( w){
+				if(w < 0)
+					throw '넓이는 음수가 될 수 없습니다.';
+				else
+					this.width = w;
+					
+				this.width = w;
+			}
+			this.setHeight = function(h){
+				if (h <0 )
+					throw '길이가 0이 될 수 없습니다.';
+				else 
+					this.height = h;
+			}
+			//메소드는 프로토타입으로 빼주는게 좋다.
+		}		
+			//method : prototype
+			Rectangle.prototype.getArea = function(){
+				return this.getWidth() * this.getHeight();
+			}
+			
+			try {
+				var rect1 = new Rectangle(5,7) //이건 Rectangle() 을 호출한 것
+				alert("면적 : " + rect1.getArea() );
+				rect1.setWidth(-2)
+				alert("면적 : " + rect1.getArea() );
+			} catch (e) {
+				alert(e);
+			}finally{
+			}
+			
+//			var msg = "";
+	//		alert(msg);
+	</script>
+</head>
+<body>
+<div></div>
+
+</body>
+</html>

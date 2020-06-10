@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	var myCar01 = {model : "BMW", color:"gray", speed:150};
+	document.write(myCar01.model + "<br>");
+	document.write(myCar01.color + "<br>");
+	document.write(myCar01.speed + "<br>");
+	
+	var myCar02=new Object(); //myCar02는 먼저 new Object()를 사용해 먼저 객체를 정의하고 그 속성 값을 별도로 지정한다.
+	myCar02['model']="benz"; // 대괄호 안의 속성은 배열 인덱스와 같은 역할을 하고, 등호 오른쪽의 값은 속성이다. 
+	myCar02['color']="Blue";
+	myCar02['speed']=100;
+	document.write(myCar02.model + "<br>");
+	document.write(myCar02.color + "<br>");
+	document.write(myCar02.speed+ "<br>");
+	document.write(myCar02['model']+ "<br>");
+	document.write(myCar02['model']+ "<br>");
+	document.write(myCar02+ "<br>");
+	console.log(typeof myCar02+ "<br>");
+	
+	
+	var myCar03= {
+			model : 'BMW',
+			color : 'gray',
+	}
+	
+	document.write('speed' in myCar03) //있는지 없는지 
+	document.write( "<br>");
+	myCar03.speed = 100;
+	delete(myCar03.speed);
+	
+	for (var key in myCar03) {
+		document.write(key + myCar03[key]+ "<br>")
+	};
+	
+	document.write(myCar03.model+ "<br>")
+	</script>
+</head>
+<body>
+
+</body>
+</html>

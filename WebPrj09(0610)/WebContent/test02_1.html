@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button id ="btn">click</button>
+<p id = "p1"></p>
+<script>
+	var hello = () => {
+		document.getElementById('p1').innerHTML += 'Hello 월드';
+	}
+	var hello2 = function(){
+		alert('hi')
+	};
+	//window.onload = hello; //이건 옛날방식 근데 뭐든 출력만하면ㄷ ㅙㅁ  
+	window.addEventListener('load',hello)
+//	window.addEventListener('load',function(e){
+//	});
+	document.getElementById('btn').addEventListener('click',hello2);
+	
+	//document.getElementById('btn').addEventListener('click',function(){
+	//	alert('Hi')	
+	//	
+	//});
+	
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!-- 입력된 정보를 jsp에 보내야 한다. 모든 input의 입력내용을 jsp로 보내야 한다.   
+HTML로 접근가능한 방법은 GET POST밖에 없는데  -->
+<!-- name은 servlet이 사용하려고  -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+
+<meta charset="UTF-8">
+<title>회원가입</title>
+
+	<style>
+	#main { margin:0px auto; width:800px;} 
+	table, td { 
+		border:1px solid black; border-collapse:collapse;}
+		td: nth-of-type(1) { width :150px; }
+		td: nth-of-type(2) { width :607px; }
+		td { padding:10px; }
+		td[colspan]{ text-align:center;}
+		input[type=text] { width:600px;  }
+	
+		/* 0px top,down  // auto : left,right ;   반드시 width가 있어야함  */
+		/*border-collapse는 표(table)의 테두리와 셀(td)의 테두리 사이의 간격을 어떻게 처리할 지 정합니다.*/
+	</style>
+	
+	<script>
+		window.onload = function(){
+			// 1. DOM 0 방식 접근법
+			//var txt = document.forms[0].elements[0].value; //0번쨰  //name = "userid"
+			//var txt = document.fors['myForm'].elements['userid'].value; // name="userid"
+			//var txt = document.myForm.userid.value; // name="userid"
+			
+			/* // 2.새로운방식
+			var userid = document.getElementById('userid');
+			var userid = document.getElementById('userpass');
+			var userid = document.getElementById('username'); */
+			
+			var form = document.getElementsByName('myForm'); 
+			form[0].onsubmit = function (e){ //이 코딩은 body안에 form태그안 onsubmit을 지울수 있다.  //getElementsByName 이 배열이니깐 form[0]을 해줘야함 
+				// input validation 
+			var result = inputCheck();
+			var r = false;
+			switch(result){
+			case 0: r= true; break;
+			case 1: alert('아이디 입력을 확인하시오'); break;
+			case 2: alert('비밀번호 입력을 확인하시오'); break;
+			case 3: alert('이름 입력을 확인하시오'); break;
+			default: break;
+			}
+			return r;
+			
+			/* 
+			r = (result == 0 )? true : false;
+			return r;
+			*/
+			
+			alert('가입 ok');
+			//위에 e를 받아서. 
+			//e.stopPropagation(); // 이벤트 버블(상위 전달)을 중지한다. 
+			//e.preventDefault(); //기본 이벤트 능력을 방해. onsubmit을 방해해서 그냥 버튼으로 만들어준다. return false면 안가고 다른일을 만들어야 한다. 
+			}
+		}
+		
+		function inputCheck(){
+			//새로운 방식
+			var userid = document.getElementById('userid');
+			if( userid.value.trim() == '' ) return 1; //이렇게 1,2,3 을해서 어디서 오류가 났는지 확인 가능 
+			var userpass = document.getElementById('userpass');
+			if( userpass.value.trim() == '') return 2;
+			var username = document.getElementById('username');
+			if( username.value.trim() == '') return 3;
+			
+			return 0;
+		}
+	</script>
+	
+</head>
+<body>
+	<div id="main">
+	<!-- <form action="http://localhost:9090/WebPrj09(0610)/get" method="POST" onsubmit = "return inputCheck()" name="myForm"> --> <!-- onsubmit= "return false" 을 넣으면  submit을 눌러도 action 페이지로 안간다. -->
+	<form action="http://localhost:9090/WebPrj09(0610)/get" method="POST"  name="myForm"> <!-- onsubmit = "return inputCheck()" -->
+	<table>
+	<caption> <h1> 회원가입 </h1> </caption>
+		<tr>
+			<td> 아이디 </td>
+			<td> <input type="text" name="userid" id="userid" value='a'/> </td> 
+		</tr>
+		<tr>
+			<td> 패스워드 (9자이상)</td>
+			<td> <input type="password" name="userpass1" id="userpass1" value='b'/> </td> 
+		</tr>
+		<tr>
+			<td> 패스워드 확인 </td>
+			<td> <input type="password" name="userpass2" id="userpass2" value='b'/> </td> 
+		</tr>
+		<tr>
+			<td> 이름 </td>
+			<td> <input type="text" name="username" id="username" value='c'/> </td> 
+		</tr>
+		<tr>
+			<td colspan="2">  <input type="submit" name="가입"/> </td> <!-- 컬럼 2개 묶으려고  -->
+		</tr>
+	</table>
+	</form>
+	</div>
+</body>
+</html>

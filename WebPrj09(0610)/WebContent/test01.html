@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	
+	
+		/*
+		var add;
+		add = function(){
+			return a+b
+		}
+		*/
+	
+	
+		/* 
+		function add(a,b){
+			return a+b
+		};*/
+		
+		/* 이건 익명함수
+		var add(a,b){
+			return a+b
+		};*/
+		
+		//이게 람다식 
+		var add = (a,b) => {
+			return a+b;
+		};
+		
+		window.onload = function(){
+			document.body.innerHTML =add(3,4);
+		}
+	</script>
+</head>
+<body>
+
+</body>
+</html>
