@@ -1,0 +1,70 @@
+window 에서 상속받은  history - location - nevigator - 
+
+document객체 : 주소줄빼고 아래에 컨텐츠 부분 
+status : 인터넷창 맨 아래
+
+location 객체
+- window 자식 객체
+- 브라우저 보고있는 문서의 위치(주소,URL)를 제어하는 객체
+
+location.href - 전체 URL << most important
+location.host - 도메인 + 포트번호
+location.hostname - 도메인
+location.port - 포트 번호
+location.protocol - 현재 프로토콜(http:)			
+
+location.href='http://naver.com';
+location.replace("http://naver.com") -> 네이버로 페이지 이동하기			
+location.reload(); - 새로고침, f5
+
+history 객체
+- window 자식 객체
+- (현재 세션에 한해서) 브라우저의 방문 기록 접근/조작 객체
+
+history.back();  -> 뒤로가기 버튼과 동일(브라우저) ***************
+history.forward(); ->앞으로가기 버튼과 동일
+
+go(n) : n(양의 정수 ~ 음의 정수)
+history.go(-1);
+history.go(-2);
+
+
+-----------------------------------------------------
+자바스크립트로는 브라우저를 제어하는것도 있지만 + 대부분 document에 출력되는 여러것들을 조작하는것. 그게 주 핵심이다.
+
+
+HTML을 DOM Tree of Objects
+
+DOM ( document object Model) 은 트리구조 
+각각의 사각형이 node - 총 10개 
+Node type = Element, Text, Attribute 
+
+document 의 최상단에  Root Element(html) 가 있다
+
+<html>
+	<head>
+		<title> My title </title>
+	</head>
+<body>
+	<a href > My link </a>
+	<h1> My header </h1>
+	
+</body>	
+</html>
+
+-----------------------------------------------------
+
+HTML의 규칙을 정의해놓은게 DTD이다.
+즉 <head> 다음에 <body> 가 와야한다. 뭐 이런 등등 규칙
+
+-----------------------------------------------------
+
+div 는 블락엘리먼트  ( 컨텐트의 양을 무시하고 한 블락을 먹어버림 ) height과 width는 먹힘 .
+span 은 inline 엘리먼트  ( 컨텐트의 양만큼만 적혀들어감 ) height과 width는 안먹힘 .
+
+-----------------------------------------------------
+
+
+
+
+

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	var fruits = ['Apple','Banana','Kiwi','Mango'];
+	//ul태그 생성하는 함수
+	function createAttr(element,name,value){ //element = Apple ,  name = 'value' , value=0
+		//option에 속성 추가 value="apple";
+	  	   var attr    = document.createAttribute( name );
+	   	   attr.value  = value; //0번째가 속성에 들어가고 
+	   	   element.setAttributeNode(attr);
+	   }
+	
+	
+	  function div1_make() {
+		   // var ul ='<ul><li>apple</li><li>apple2</li></ul>';
+		   var ul   = document.createElement('ul'); // <ul></ul>
+		   
+		   for(var i=0;i< fruits.length;i++ ) {
+			   var li  = document.createElement('li');  // <li></li>
+			   var txt = document.createTextNode( fruits[i] ); // "apple"
+			   li.appendChild(txt);
+			   ul.appendChild(li);
+		   }
+		   	   
+		   return ul;
+	   }
+	   
+	
+	function div2_make(){
+		//var select = '<select><option>apple</option> <option>Banana</option> </select>';
+		
+		//var select = '<select name= '' size="3">'; //size는 몇줄인지.
+		//<option value=''>apple</option>
+		//<option>banana</option></select>;
+		//1 , 2, 3, 4,를 선택했을떄 그 정보를 서버로 보내려면  form태그와  반드시 id를 입력해야하고 그럼 name 이 있어야한다. 
+		
+		var select = document.createElement('select');
+		for (var i in fruits) { // fruit는 fruits에 있는 과일 하나를 꺼내가지고 반복문을 돌려라
+			var option = document.createElement('option');
+			var txt =document.createTextNode( fruits[i] );
+			option.appendChild(txt); //과일은 option의 이름이 되는거고 
+			
+			//option에 속성 추가 value="0"
+			createAttr(option,'value',i); //사과 , value , 0   
+			
+			select.appendChild(option);
+		}
+		// <select name="fruit"> 추가 되어야 한다.
+		createAttr(select,'name','fruit');
+		
+		return select;
+	}
+
+	/* <div>
+	<input type="checkbox" name="fruits" value="apple" id="apple"/>
+	<label for="apple">apple</label>	
+	
+	<input type="checkbox" name="fruits" value="banana" id="banana"/>
+	<label for="banana">banana</label>	
+	</div> */
+	   function div3_make() {
+		   var div = document.createElement('div');
+		   
+		   fruits.forEach(function( fruit, indewx, array) {
+			   var input = document.createElement('input');
+			   // 속성
+			   createAttr( input, 'type', 'checkbox' );
+			   createAttr( input, 'name', 'fruits' );
+			   createAttr( input, 'value', fruit );
+			   createAttr( input, 'id', fruit );
+			   
+			   var label = document.createElement('label');
+			   var txt   = document.createTextNode( fruit );
+			   label.appendChild( txt );
+			   // 속성
+			   createAttr( label, 'for', fruit );
+			   
+			   div.appendChild( input );   
+			   div.appendChild( label );  
+			   
+		   });   
+		   
+		   return div;
+	   }
+
+	
+	window.onload = function(){
+		var btn1 = document.getElementById('btn1');
+		var div1 = document.getElementById('div1');
+		var div2 = document.getElementById('div2');
+		var div3 = document.getElementById('div3');
+		
+		btn1.addEventListener('click',function(event){
+			alert('버튼눌렀네?');
+			var ul =	div1_make();
+			div1.appendChild(ul);//innerHTML은 텍스트 전용 ,, appendChild는 객체 전용 
+			
+			var select = div2_make();
+			div2.appendChild(select);
+		
+			var cbDiv = div3_make();
+			div3.appendChild(cbDiv);
+		});
+	}
+	
+	
+
+	
+	</script>
+</head>
+<body>
+	<form action="test05_proc.jsp" method="GET">
+	<input type="button" id="btn1" value="만들자 ">
+	<div id="div1"></div>
+	<div id="div2"></div>
+	<div id="div3"></div>
+	<input type="submit" value="전송"/>
+	</form>
+		
+	
+<!-- var fruits = ['Apple','Banana','Kiwi','Mango']
+div1 : ul
+
+<select>
+	<option></option>
+	<option></option>
+</select>
+
+div2 : select
+
+div3 input type = "radio" -->
+
+</body>
+</html>

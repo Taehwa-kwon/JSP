@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title id="demo"><h1>Dom tutorial</h1></title>
+<script>
+	window.onload= function (){
+		//문장 그대로 가지고 오느냐, 아니면 문자만 가져오느냐 의 차이
+	var txt1 = document.getElementById('demo').innerHTML ;
+	var txt2 = document.getElementById('demo').innerText ;
+	var txt3 = document.getElementById('demo').firstChild ;
+	var txt4 = document.getElementById('demo').firstChild.nodeValue;
+	var txt5 = document.getElementById('demo').childNodes[0].nodeValue;
+	alert(txt1); //&lt;h1&gt;Dom tutorial&lt;/h1&gt; 이것을 복사하고 
+	alert(txt2); //<h1>Dom tutorial</h1> 이것을 복사하고 
+	alert(txt3); // [object Text]  
+	alert(txt4); // <h1>Dom tutorial</h1>
+	console.dir(demo); //dir이 객체로 바꿔주는것 
+	alert(txt5); // <h1>Dom tutorial</h1> 
+	
+	
+	document.getElementById('div1').innerHTML = txt1; <h1>Dom tutorial</h1>
+	document.getElementById('div2').innerHTML = txt2; Dom tutorial
+	document.getElementById('div3').innerHTML = txt3; [object Text]
+	document.getElementById('div4').innerHTML = txt4; Dom tutorial
+	document.getElementById('div5').innerHTML = txt5; Dom tutorial 
+	}
+</script>
+</head>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<div id="div4"></div>
+<div id="div5"></div>
+
+</body>
+</html>

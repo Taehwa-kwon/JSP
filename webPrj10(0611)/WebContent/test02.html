@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<style> 
+		
+	</style>
+<script>
+	window.onload = function(){
+		var id02 = document.getElementById('id02') // p태그
+		var id01 = document.getElementById('id01') // h1태그
+		var div1 = document.getElementById('div1')
+		
+		//div1.innerHTML = id01.innerHTML; //id01 안에 innerHTML을 가져와서 div1.innerHTML한다.  
+		//div1.innerHTML = id01.firstChild.nodeValue; //h 태그의 첫번째 자식은 Text이다. 
+		div1.innerHTML = id01.ChildNodes[0].nodeValue; //id01의 자식중의 1번쨰 자식은 Text이다.
+		
+		console.dir(div1); //console창을 보면 div#div #div:아이디가 div인 div를 찾아서 dir:그 객체를 출력해서 
+		//여기서 이벤트 목록을 찾을수 있다. onclick 을 쓰고싶다면 console창에서 이 onclick을 찾는거지 . 있으면 해보는거 
+		//null이라면 실행해도 아무런 행동을 하지 않는다.
+		
+		div1.onclick = function(){ //클릭버튼을 추가한다. 
+			alert(this.innerHTML);
+		}
+	}
+</script>
+</head>
+<body>
+	<h1 id = "id01">My First Page</h1>
+	<p id = "id02">Hello!!!</p>
+	<div id="div1"></div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<style>
+		img[data-index=op] { opacity:0.7; border:10px solid red;} 
+	</style>
+	<script>
+	window.onload =function(){
+		/* 이미지의 어떠한 속성이 있는애들만 ||  투명도를 조절하는것 */
+		
+		
+		//이건 데이터 속성을 못입힌다.
+		
+	/* 	var img = document.createElement('img');
+		img.src = 'images/Jellyfish.jpg';
+		img.width = 500;
+		img.height =500;
+		img.data = op;
+		document.body.appendChild(img);   */
+		
+		  var img = document.createElement('img');
+		img.setAttribute('src','images/Jellyfish.jpg');
+		img.setAttribute('width',500);
+		img.setAttribute('height',500); 
+	
+		// setAttribute() 메소드를 사용하면 새로운 속성을 만들수 있다. 
+		img.setAttribute('data-index','op');
+		document.body.appendChild(img); 
+		
+		var btnRemove = document.getElementById('removeBtn');
+		
+		/*
+		이벤트를 딱 한번만 처리한다.
+		btnRemove.onclick=function(){
+			alert('click1');
+		};
+		btnRemove.onclick=function(){
+			alert('click2');
+		};
+		*/
+		
+		//이벤트 여러번 처리한다. 연속처리 가능하다. + 단점은 IE 낮은버전만 불 가능하고 attachEvent('click',함수); 
+		btnRemove.addEventListener('click',function(){ alert('1')});
+		btnRemove.addEventListener('click',function(){ alert('2')});
+		btnRemove.addEventListener('click',function(){ alert('3')});
+		
+		var btn1 = document.getElementById('btn1');
+		btn1.addEventListener('click',btnClick);
+		
+		function btnClick(){
+			btn1.removeEventListener('click',btnClick);
+			var img = document.querySelector('img');
+			 document.body.removeChild(img);
+		}
+		
+			alert('한번클릭');
+			btn1.removeEventListener('click',); //이벤트를 지운다. removeEventListener  
+		
+			
+	} 
+	</script>
+</head>
+<body>
+	<button id="removeBtn">반복적 실행 Remove</button><br>
+	<button id="btn1">1회성 </button><br>
+
+</body>
+</html>

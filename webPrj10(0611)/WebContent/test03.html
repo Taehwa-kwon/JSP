@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script>
+	window.onload = function(){
+	var btn1 = document.getElementById('btn1');
+	var div1 = document.getElementById('dvi1');
+	var div2 = document.getElementById('dvi2');
+	
+	btn1.addEventListener('click',function(event){ //event 는  click한 이벤트를 모아둔것. 
+		console.log(event); //console에서 보면 type: click 이다 .
+		var btn = event.srcElement || event.target; 
+		// event.srcElement  : IE
+		// event.target : other Browser
+		alert(btn.innerHTML) ;
+		
+		//만들기 
+		var h1 = document.createElement('h1'); 
+		//<h1></h1> 이건 현재 메모리에 만들어짐. document는 메모리에 만드는것을 의미하네 
+		var txt = document.createTextNode('This is new Content.');
+		h1.appendChild(txt); 
+		div1.appendChild(h1);
+		//HTML에 그 노드 구조처럼 만들어 주는거임. h1과 this is new Content를 appendChild로 연결해준다. 
+		
+		/* <ul>
+		<li>사과</li>
+		<li>배</li>
+		</ul> */
+		
+		var ul = document.createElement('ul');
+		
+		var li1 = document.createElement('li');
+		var txt1 = document.createTextNode('사과');
+		li1.appendChild(txt1);
+		ul.appendChild(li1);
+		
+		var li2 = document.createElement('li');
+		var txt2 = document.createTextNode('배');
+		li2.appendChild(txt2);
+		ul.appendChild(li2);
+		
+		div2.appendChild(ul);
+	});
+	}
+	
+	</script>
+</head>
+<body>
+	<button id="btn1">만들기</button>
+	<div id="div1"></div>
+		<h1>This is new Content.</h1>
+	<div id="div2"></div>
+			
+</body>
+</html>
