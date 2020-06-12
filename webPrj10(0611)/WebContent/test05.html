@@ -35,7 +35,7 @@
 		//var select = '<select name= '' size="3">'; //size는 몇줄인지.
 		//<option value=''>apple</option>
 		//<option>banana</option></select>;
-		//1 , 2, 3, 4,를 선택했을떄 그 정보를 서버로 보내려면  form태그와  반드시 id를 입력해야하고 그럼 name 이 있어야한다. 
+		//1 , 2, 3, 4,를 선택했을떄 그 정보를 서버로 보내려면  form태그와  반드시 id를 입력해야하고 그럼id와  name은 거의 하나라고 생각하니깐 name도  있어야한다. 
 		
 		var select = document.createElement('select');
 		for (var i in fruits) { // fruit는 fruits에 있는 과일 하나를 꺼내가지고 반복문을 돌려라
@@ -49,7 +49,7 @@
 			select.appendChild(option);
 		}
 		// <select name="fruit"> 추가 되어야 한다.
-		createAttr(select,'name','fruit');
+		createAttr(select,'name','fruit'); 
 		
 		return select;
 	}
