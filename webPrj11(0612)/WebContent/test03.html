@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#a1 { color: black; text-decoration:none; 
+		border: 1px solid blue;}
+	#a1:hover { color:yellow; background-color:blue;}	 /* 마우스 가져가면 색 바뀌는것 */
+		
+</style>
+<script>
+	/* 2. */
+	var locs = [
+		{title:'네이버',href:'http://www.naver.com'}, //이 두개의 속성을 묶어서 하나의 객체로 만든다.
+		{title:'네이트',href:'http://www.nate.com'},	//앞에것이 TextNode가 되고 뒤에있는겍 value가 된다. 
+		{title:'다음',href:'http://www.daum.com'},
+		{title:'구글',href:'http://www.google.com'}
+	];
+	/* 4. */
+	//<option>네이버</option>
+	//<option value="">네이버</option> //value에 값을 넣기위한 작업을 시작한다.
+	function selectInit(){
+		var select = document.querySelector('select[name=loc]'); //select 타입에 name=loc인것을 찾아라.
+		locs.forEach( function(value,index) {
+			var loc= value;	//value는 locs의 객체 한줄이 된다. 그럼 총 4개가 넘어가는거지  
+			var option = document.createElement('option');
+			var txt = document.createTextNode(loc.title); //"네이버" <<라는 글자를 뽑아내기
+			option.appendChild(txt);// <option>네이버</option>
+	/* 4. */			
+	/* 5.value값 넣기 */	
+			var attr = document.createAttribute("value");
+			attr.value = loc.href; //loc.href는 객체한줄의 href가 넘어가는거지 attr=이 value니깐 그 value 에다가  
+//			option.setAttribute("value","http://www.naver.com");
+			option.setAttributeNode(attr);
+			
+			select.appendChild(option);
+		});
+	}
+	
+	
+	//a tag를 버튼처럼 사용 
+	//바로 이동하지 않고 일처리를 한 다음에 이동 
+	window.onload = function(){
+		var a1 = document.getElementById('a1');
+		
+		selectInit();/* 3. */
+		
+		a1.onclick = function(e){ //on뒤에 있는거는 다 이벤트 함수 
+			//alert('네이버로 갑니다.');
+			//바로 이동하지 않기 위해서 기존 이벤트의 능력을 막아두고 
+			e.preventDefault();
+			e.stopPropagation();
+			
+			//6.선택된 값이 뭔지 알아보기
+			var select = document.getElementsByName('loc')[0];
+			console.log(select);
+			var idx = select.selectedIndex;
+			var selText = select[idx].value; //var selText = select.options[idx].value; 랑 같다. 
+			alert(selText);
+			
+			
+			alert(selText+'로 간다');
+			location.href=selText; 
+		}
+	}
+</script>
+</head>
+<body>
+	<select name="loc"> <!-- 1.여기서부터 설명 시작 --> 
+	</select> 
+	<a href="http://www.naver.com" id="a1">네이버</a>
+	<!--  A태그인데도 디자인만 입히면 예쁘게 만들수 있다. -->
+	<a href="http://www.naver.com">네이버</a>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.red { color:red; }
+	.green { color:green; }
+</style>
+<script>
+	var msg= '';
+
+		/* XMLHttpRequest(XHR) 객체는 서버와 상호작용하기 위하여 사용됩니다. 
+		전체 페이지의 새로고침없이도 URL 로부터 데이터를 받아올 수 있습니다. 
+		이는 웹 페이지가 사용자가 하고 있는 것을 방해하지 않으면서 페이지의 일부를 업데이트할 수 있도록 해줍니다. 
+		XMLHttpRequest 는 AJAX 프로그래밍에 주로 사용됩니다. */
+
+	window.onload = function(){
+		var btnCheck = document.getElementById('btnCheck'); //중복확인버튼을 여기에 담아서.
+		//중복 확인 클릭
+		btnCheck.onclick = function(){ //이 버튼을 찾아서 클릭되면 함수를 실행해라
+		//	alert('btnCheck');
+			var dupMsg = document.getElementById('dupMsg'); //span 태그를 찾아서 dupMsg를 정해놓고
+			var xhr = new XMLHttpRequest();
+			
+			
+			//동기호출방식
+			//xhr.onreadystatechange = function(){ //open,send 등등이 이벤트가 발생하면 openreadystatechange가 호출된다.
+		/* 	if(xhr.readyState ==4 ){	//데이터를 전부다 보내면 4가 된다.
+				if(xhr.status == 200){
+					var msg = xhr.responseText;//out.print한게 여기로 와서 msg에 넣는다. 
+					alert(msg);
+					dupMsg.innerHTML = msg;	//비동기 방식은 이게 핵심이네.. 
+					}
+				}
+			} */
+			
+			
+			//비동기 호출 방식 
+			var uid = document.getElementsByName('userid')[0].value;
+			xhr.open('GET',
+					'http://localhost:9090/webPrj12(0612)/GetMember?userid='+uid,
+					true)  
+					//get방식으로 호출할 것이고  //GetMember를 실행해서 //true(비동기호출) 결과가 주어질 때까지 아무것도 못하고 대기 xhr.send()가 끝나고 4가 나오고 200번이 나오면 msg = xhr.responseText; 이게 실행  
+					// fasle(동기호출)  send() 함수에서 서버로부터 응답이 올 때까지 기다림 
+					//비동기방식은 : 화면 open 하고 send 하고 , 안기다리고 msg 를 찍는다. 
+			xhr.send(); 
+			var msg = xhr.responseText;
+			alert(msg);
+			dupMsg.innerHTML = msg;											//이게 함수로 뺴면 안되나봄 그럼 
+			
+		
+		}
+		alert('load'); //window.onload => 페이지를 다 그리고 나면 바로 실행해라 ,   화면 다 그리면 바로 실행되는게 load
+	}
+</script>
+
+</head>
+<body>
+
+	<!-- 여기서 우리는 아이디 암호의 servlet과 중복검사하는 servlet을 두개를 만들어야한다. 여기의 name로 servlet에서 사용한다.-->
+	<form action="http://localhost:9090/webPrj12(0612)/RegMember" method="GET"> <!-- 여기 action은 먼저 servlet으로 만들어주고 그 주소줄을 action에 입력시킨다. -->
+	아이디<input type="text" name="userid"/>
+	<input type="button" value="중복확인" id="btnCheck">
+	<span id="dupMsg"></span> <!-- dupMsg중복메세지 -->
+	<br> <!-- AJON의 기술을 사용해서 서버를 갔다오고 DB에 가서 select문을 던져서 있다없다를 판단해서 다시 그것을 servlet으로 보내고 html로 다시와야한다. --> 
+	암호<input type="password" name="userpass"/><br> 
+	<input type="submit" value="가입">
+	</form>
+</body>
+</html>

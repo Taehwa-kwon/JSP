@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	h1,p {
+		border:3px solid black;
+		padding : 30px;}
+</style>
+<script>
+	window.onload = function () {
+		var h1 = document.getElementById('header');
+		h1.onclick = function () {
+			alert('header');
+		}
+		var p =document.getElementById('para')
+		p.onclick = function(e){
+			console.log(e);
+			alert('para');
+			
+			var event = e || window.event;
+			event.cancelBubble =true;
+			if(event.stopPropagation ){
+				event.stopPropagation();
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<h1 id="header">
+		<p id="para">Paragraph</p>	
+	</h1>
+
+</body>
+</html>

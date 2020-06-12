@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	* { border : 3px solid black; padding:20px; }
+</style>
+</head>
+<body> 
+<!-- 바깥쪽 사각형부터 클릭해보면됌 // 나는 Paragraph를 클릭했을때 이거에 대한 alert('p')만 보고싶은데 연속적으로 연결됌 . 
+네이버를 기준으로 봤을때 어떠한 div에 둘러싸인 기사인 그림 + 글자 중에 그림만 클릭했는데 글자의 이벤트도 연속적으로 실행되는 문제를 이벤트 버블링 이라고 한다.
+그래서 이걸 해결하기 위해서 
+		
+옛날버전인 IE에서는 이벤트가 window.event라고 해야함 그래서 var event = e || window.event; (IE 8이하는 window.event) 
+
+	document.getElementById('Paragraph').onclick = function (e) {
+		//이벤트 객체를 처리
+		var event = e|| window.event;
+
+		//이벤트 발생알림
+		alert('Paragraph');
+
+		//이벤트 전달 제거
+		event.cancelBubble =true;
+		if ( event.stopPropagation){
+		event.stopProgagation();		
+			 }
+		}
+		
+		----------------------------아래처럼 2개인 경우에 프로퍼팁 방식으로 이벤트를 설치하면 맨 마지막 1개만 실행가능 -> 
+		<input type="button" id="target" value="button" />
+		<script>
+			var t = document.getElementById('target');
+			t.onclick = function(event){
+				var event = event || window.event;
+				var target = event.target || event.srcElement;
+				alert(1);
+			}
+		t.onclick = function(event){
+				var event = event || window.event;
+				var target = event.target || event.srcElement;
+				alert(1);
+			}
+		</script>
+		
+		그래서 그것을 개정한게  input에 이벤트를 설치한다. 설치라고 이해 
+		<input type="button" id="target" value="button" />
+		<script>
+		var t = document.getElementById('target');		//1.id = target 인 inpuy을 가져와서 
+		t.addEventListener('click',function ( event ) { 
+			alert('AA' + event.target.value); //target = t가 되고 그것의 value는 button 
+		});
+		t.addEventListener('click',function ( event ) {
+			alert(2);
+		});
+		</script>
+		-->
+	<div onclick="alert('out')">
+		<div onclick="alert('inner')">
+			<h1 onclick="alert('h1')">
+				<p onclick="alert('p')">Paragraph</p>
+			</h1>
+		</div>
+	</div>
+</body>
+</html>
