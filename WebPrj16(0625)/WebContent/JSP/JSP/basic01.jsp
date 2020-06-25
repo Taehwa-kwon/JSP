@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!-- 컴파일은 컴퓨터가 이해할 수 있는 언어 (cpu에 연산을 시키는 것) 로 바꿔주는것(즉 어셈블리언어로 바꿔주는 것),  자바와 c#의 컴파일은 사실상 다르다.-->
+    <!-- https://m.blog.naver.com/PostList.nhn?blogId=kimkwon429&logCode=0&categoryNo=18&currentPage=3 JSP 기초에 정말 좋은 문법 -->
      
 <!DOCTYPE html>
 <html>
