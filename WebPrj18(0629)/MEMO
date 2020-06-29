@@ -1,0 +1,81 @@
+//jsp json.simple download 다운도르하기
+
+--테이블 생성   
+CREATE TABLE MEMBER
+(
+    USERID VARCHAR2(20) NOT NULL PRIMARY KEY,
+    USERNAME VARCHAR2(20) NOT NULL,
+    USERPASS VARCHAR2(20) NOT NULL
+);
+--삽입
+INSERT INTO MEMBER VALUES('HONG','홍길동','1111');
+COMMIT;
+        
+        
+--회원관리 패키지
+
+create or replace package pkg_member 
+as 
+    procedure proc_idcheck(
+        in_memid varchar2,
+        o_cur out sys_refcursor
+    );
+
+    procedure proc_login(
+        in_memid varchar2,
+        in_mempass varchar2,
+        o_cur out sys_refcursor
+    );
+
+end pkg_member
+;
+ 
+
+-->본문 생성해서    
+    --아이디 중복체크
+  procedure proc_idcheck(
+        in_memid varchar2,
+        o_cur out sys_refcursor
+    ) 
+    AS
+        cnt number(6);
+    BEGIN
+        select count(*) into cnt
+        from member
+        where userid = in_memid
+        ;
+        open o_cur for
+        select cnt as cnt from dual;
+    
+  END proc_idcheck;
+  
+  0.o_cur out sys_REFCURSOR
+  1.begin에 결과값을 cnt에 담은다음에 
+  2. 다시 그 결과를 o_cur로 넣는다. 
+  
+  
+  
+    --로그인 체크
+  procedure proc_login(
+        in_memid varchar2,
+        in_mempass varchar2,
+        o_cur out sys_refcursor
+    ) AS
+    
+    cnt number(6);
+    
+  BEGIN
+    
+    SELECT COUNT(*) INTO CNT
+    FROM MEMBER
+    WHERE USERID = IN_MEMID
+    AND USERPASS = IN_MEMPASS
+    ;
+    
+    OPEN O_CUR FOR
+    SELECT CNT AS CNT FROM DUAL;
+  
+  
+  
+  
+  
