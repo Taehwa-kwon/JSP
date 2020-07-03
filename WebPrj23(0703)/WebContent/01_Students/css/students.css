@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.cchk { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 50px; height : 30px;}
+.cId { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 150px; height : 30px;}
+.cName { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 150px; height : 30px;}
+.cTel { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 150px; height : 30px;}
+.cAddr { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 300px; height : 30px;}
+.cDept { border : 1px solid #444444; font-size : 20px; color : #222222; float : left; width : 250px; height : 30px;}
+
+.title, .list{clear : both};
