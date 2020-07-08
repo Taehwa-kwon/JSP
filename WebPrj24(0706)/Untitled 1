@@ -1,0 +1,269 @@
+INSERT INTO GRPCOMMONS_TBL VALUES ('GRP003','시험코드'); COMMIT;
+
+INSERT INTO COMMONS_TBL VALUES('COM001','GRP003','2018-01-01', 0,'ROOT');
+INSERT INTO COMMONS_TBL VALUES('COM002','GRP003','2018-01-02', 0,'ROOT');
+
+INSERT INTO GRPCOMMONS_TBL VALUES('GRP004','학점');
+INSERT INTO COMMONS_TBL VALUES('COM0001','GRP004','A-4.5',0,'ROOT');
+INSERT INTO COMMONS_TBL VALUES('COM0002','GRP004','B-3.5',0,'ROOT');
+INSERT INTO COMMONS_TBL VALUES('COM0003','GRP004','C-2.5',0,'ROOT');
+INSERT INTO COMMONS_TBL VALUES('COM0004','GRP004','D-1.5',0,'ROOT');
+INSERT INTO COMMONS_TBL VALUES('COM0005','GRP004','F-0',0,'ROOT');
+COMMIT;
+
+
+
+
+CREATE OR REPLACE 
+PACKAGE PKG_MEMBERS AS 
+    PROCEDURE PROC_SEL_STUDENTS(
+        IN_STU_DEPT IN VARCHAR2,
+        O_CUR OUT SYS_REFCURSOR
+    );
+   
+    PROCEDURE PROC_SEL_YEAR(
+        
+        O_CUR OUT SYS_REFCURSOR
+    );
+    
+    PROCEDURE PROC_SEL_SUBJECTS(
+        IN_STU_ID IN VARCHAR2,
+        IN_YEAR IN VARCHAR2,
+        IN_SEMESTER IN VARCHAR2,
+        O_CUR OUT SYS_REFCURSOR
+        
+    );
+    
+ PROCEDURE PROC_INS_SCORES(
+    IN_SUB_ID       IN      VARCHAR2,
+    IN_DO_YEAR      IN      VARCHAR2,
+    IN_SEMESTER     IN      VARCHAR2,
+    IN_GUBUN        IN      VARCHAR2,
+    IN_STU_ID       IN      VARCHAR2,
+    IN_SCORE        IN      VARCHAR2,
+    IN_EXAM_DATE    IN      VARCHAR2,
+    O_CUR           OUT     SYS_REFCURSOR
+  );
+  
+  PROCEDURE PROC_SEL_SCORE(
+  IN_YEAR IN VARCHAR2,
+  IN_SEMESTER IN VARCHAR2,
+  IN_GUBUN IN VARCHAR2,
+  IN_STU_ID IN VARCHAR2,
+  O_CUR           OUT     SYS_REFCURSOR
+  );
+    
+
+END PKG_MEMBERS;
+
+
+
+
+CREATE OR REPLACE
+PACKAGE BODY PKG_MEMBERS AS
+
+  PROCEDURE PROC_SEL_STUDENTS(
+        IN_STU_DEPT IN VARCHAR2,
+        O_CUR OUT SYS_REFCURSOR
+    ) AS
+  BEGIN
+    
+    OPEN O_CUR FOR
+    SELECT STU_ID, STU_NAME FROM STUDENTS_TBL
+    WHERE STU_DEPT = IN_STU_DEPT
+    AND STU_DEPT_GRP = 'GRP002'
+    ;
+    
+    END PROC_SEL_STUDENTS;
+    
+    
+    ----------------------------------------------------
+    PROCEDURE PROC_SEL_YEAR(
+        
+        O_CUR OUT SYS_REFCURSOR
+    ) AS
+    BEGIN
+    
+    OPEN O_CUR FOR
+    select to_char(sysdate,'yyyy') - (level-1) as SYEAR, to_char(sysdate,'yyyy') as TYEAR
+    from dual 
+    connect by level <=120
+    order by to_char(sysdate,'yyyy')-(level-1)
+    ;
+
+    END PROC_SEL_YEAR;
+    ----------------------------------------------------
+    
+    PROCEDURE PROC_SEL_SUBJECTS(
+        IN_STU_ID IN VARCHAR2,
+        IN_YEAR IN VARCHAR2,
+        IN_SEMESTER IN VARCHAR2,
+        O_CUR OUT SYS_REFCURSOR
+        
+    )AS
+    BEGIN 
+    
+    OPEN O_CUR FOR
+    SELECT T1.SUB_ID, T2.SUB_NAME
+    FROM STUDENTS_TIME_TBL  T1,SUBJECTS_TBL T2
+    WHERE T1.SUB_ID = T2.SUB_ID
+    AND T1.STU_ID = IN_STU_ID
+    AND T1.SEMESTER = IN_SEMESTER
+;
+    
+    END
+    PROC_SEL_SUBJECTS;
+    
+    ----------------------------------------------------
+    
+    
+   PROCEDURE PROC_INS_SCORES(
+    IN_SUB_ID       IN      VARCHAR2,
+    IN_DO_YEAR      IN      VARCHAR2,
+    IN_SEMESTER     IN      VARCHAR2,
+    IN_GUBUN        IN      VARCHAR2,
+    IN_STU_ID       IN      VARCHAR2,
+    IN_SCORE        IN      VARCHAR2,
+    IN_EXAM_DATE    IN      VARCHAR2,
+    O_CUR           OUT     SYS_REFCURSOR
+  ) AS
+  
+  V_CNT NUMBER(4) := 0;
+  V_RESULT VARCHAR2(10);
+   
+  BEGIN
+  
+    SELECT COUNT(*) INTO V_CNT
+    FROM SCORES_TBL
+    WHERE SUB_ID = IN_SUB_ID
+    AND DO_YEAR = IN_DO_YEAR
+    AND SEMESTER = IN_SEMESTER
+    AND GUBUN = IN_GUBUN
+    AND STU_ID = IN_STU_ID
+    ;
+
+   IF V_CNT = 0 THEN
+    INSERT INTO SCORES_TBL( STU_ID, SUB_ID, DO_YEAR, SEMESTER, GUBUN, SCORE, EXAM_DATE)
+    VALUES(IN_STU_ID, IN_SUB_ID, IN_DO_YEAR, IN_SEMESTER, IN_GUBUN, IN_SCORE, IN_EXAM_DATE);
+
+   COMMIT;
+   
+    V_RESULT := 'SUC';
+   
+   ELSE
+   
+    V_RESULT := 'FAIL';
+    
+   END IF;
+   
+   OPEN O_CUR FOR
+   SELECT V_RESULT AS RST FROM DUAL;
+   
+   
+  END PROC_INS_SCORES;
+
+
+   ---------------------------------------------------- 
+   
+     PROCEDURE PROC_SEL_SCORE(
+  IN_YEAR IN VARCHAR2,
+  IN_SEMESTER IN VARCHAR2,
+  IN_GUBUN IN VARCHAR2,
+  IN_STU_ID IN VARCHAR2,
+  O_CUR           OUT     SYS_REFCURSOR
+  )
+  AS
+  
+  BEGIN
+    OPEN O_CUR FOR
+ SELECT H.STU_ID, H.STU_NAME, H.SUB_NAME, H.SUB_CREDIT, H.SCORE, H.CREDIT
+    , H.TLT_SCORE, ROUND(H.AVG_SCORE,2) AS AVG_SCORE, ROUND(H.TLT_TSCORE / H.TLT_SUB_CREDIT,2) AS ALL_AVG 
+  FROM   
+ (   
+    SELECT G.STU_ID, G.STU_NAME, G.SUB_NAME, G.SUB_CREDIT, G.SCORE, G.CREDIT
+      ,G.C_SCORE, G.TLT_CSCORE
+      ,SUM(SUB_CREDIT) OVER(PARTITION BY G.STU_ID) AS TLT_SUB_CREDIT
+      ,SUM(SCORE) OVER(PARTITION BY G.STU_ID) AS TLT_SCORE
+      ,SUM(TLT_CSCORE) OVER(PARTITION BY G.STU_ID) AS TLT_TSCORE
+      ,AVG(SCORE) OVER(PARTITION BY G.STU_ID) AS AVG_SCORE
+FROM
+(
+    SELECT E.STU_ID, E.STU_NAME, E.SUB_NAME, E.SUB_CREDIT, E.SCORE,F.CREDIT
+            , F.C_SCORE, (E.SUB_CREDIT * F.C_SCORE) AS TLT_CSCORE
+    FROM
+    (
+        SELECT 
+            C.STU_ID, C.STU_NAME, C.SUB_NAME, C.SUB_CREDIT, D.SCORE,
+            CASE
+                WHEN D.SCORE<60 THEN 'F'
+                WHEN D.SCORE>=60 AND D.SCORE<70 THEN 'D'
+                WHEN D.SCORE>=70 AND D.SCORE<80 THEN 'C'
+                WHEN D.SCORE>=80 AND D.SCORE<90 THEN 'B'
+                WHEN D.SCORE>=90 THEN 'A'
+            END AS CREDIT    
+                
+         FROM
+             (
+                SELECT A.STU_ID, A.STU_NAME, A.SUB_ID, A.SUB_NAME, A.DO_YEAR
+                      ,A.SEMESTER, A.SUB_CREDIT, B.GUBUN  
+                FROM
+                (
+                    SELECT T1.STU_ID, T1.STU_NAME, T2.SUB_ID, T3.SUB_NAME, T2.DO_YEAR, T2.SEMESTER, T3.SUB_CREDIT
+                    FROM STUDENTS_TBL T1, STUDENTS_TIME_TBL T2, SUBJECTS_TBL T3  --학생, 시간표, 과목 
+                    WHERE T1.STU_ID = T2.STU_ID
+                    AND T2.SUB_ID = T3.SUB_ID        
+                )A,
+                (
+                    SELECT TO_CHAR(TO_DATE(COM_VAL), 'YYYY') AS DO_YEAR
+                          ,TO_CHAR(TO_NUMBER(TO_CHAR(TO_DATE(COM_VAL), 'MM'))) AS SEMESTER
+                          ,TO_CHAR(TO_NUMBER(TO_CHAR(TO_DATE(COM_VAL), 'DD'))) AS GUBUN      --공통코드  ,, 원래라면 얘가 subject안에 들어가 있어야 한다.
+                    FROM COMMONS_TBL
+                    WHERE GRP_ID = 'GRP003'
+                ) B
+             )C, SCORES_TBL D
+        WHERE C.STU_ID = D.STU_ID(+) AND C.SUB_ID = D.SUB_ID(+) AND C.DO_YEAR = D.DO_YEAR(+)   ----학생들의 시간표 상황
+        AND C.SEMESTER = D.SEMESTER(+) AND C.GUBUN = D.GUBUN(+)
+       AND (C.STU_ID = 'STU017' OR C.STU_ID='STU018')
+        AND C.DO_YEAR = '2018'
+        AND C.SEMESTER = '1'
+        AND C.GUBUN = '1'
+       -- AND C.STU_ID =: IN_STU_ID
+       -- AND C.DO_YEAR =: IN_YEAR
+       -- AND C.SEMESTER =: IN_SEMESTER
+        --AND C.GUBUN =: IN_GUBUN
+    ) E 
+    ,
+    (
+        SELECT SUBSTR(COM_VAL, 1, 1) AS CREDIT
+              ,TO_NUMBER(SUBSTR(COM_VAL, 3)) AS C_SCORE
+        FROM COMMONS_TBL						
+        WHERE GRP_ID='GRP004'
+    )F
+    WHERE E.CREDIT = F.CREDIT
+ ) G
+)H
+;
+    
+  END 
+  PROC_SEL_SCORE;
+    
+
+
+END PKG_MEMBERS;
+
+
+
+
+
+
+--학생들의 시간표 상황
+SELECT T1.STU_ID, T2.SUB_ID, T2.DO_YEAR, T2.SEMESTER
+FROM STUDENTS_TBL T1, STUDENTS_TIME_TBL T2, SCORES_TBL T3
+WHERE T1.STU_ID = T2.STU_ID
+AND T2.STU_ID = T3.STU_ID AND T2.SUB_ID = T3.SUB_ID
+AND T2.DO_YEAR =T3.DO_YEAR AND T2.SEMESTER = T3.SEMESTER
+;
+
+
+
+
