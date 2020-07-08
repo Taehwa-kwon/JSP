@@ -8,7 +8,7 @@
 
 <script src ="https://code.jquery.com/jquery-3.5.0.js"></script>
 
-<script src="../js/students.js"></script> <!-- js파일을 가져오기 -->
+<script src="./js/students.js"></script> <!-- js파일을 가져오기 -->
 
 <script>
 	$(document).ready(

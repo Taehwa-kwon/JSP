@@ -77,14 +77,14 @@ var getGugun = function(){
 		
 		url : "./Datas/getAddr.jsp",
 		type : "post",
-		data : "addr=" + selectedVal + "&lvl="+lvl,  
+		data : "addr="+ selectedVal+"&lvl="+lvl,  
 		//addr=COMID0001
 		//getAddr.jsp로 보내고     selectedVal = com_id 를 말한다.
 		datatype : "json",  //getAddr.jsp로 받아온다.
 		
 		
 		success : function(datas){
-			strHTML += "<select id='addr"+lvl+"' name='addr"+lvl+"'>";
+			strHTML += "<select id='addr"+lvl+"' name='addr"+lvl+">";
 			strHTML += "<option value='-'>선택하시오</option>" //이렇게 해야 처음에 서울을 선택해도 값이 나옴
 															//여기 -가 중요한 역할을 한다. 맨마지막의 add4의 value가 - 이면 register_ok.jsp로 ㄱ  
 			
@@ -97,6 +97,8 @@ var getGugun = function(){
 			strHTML +="</slect>";
 			
 			$("#"+objID).html(strHTML);
+			
+			$("#"+objID).addClass("easyui-combobox");
 			
 			
 		}
