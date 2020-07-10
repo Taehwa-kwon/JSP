@@ -26,9 +26,7 @@
 <script>
 	$(document).ready(
 		function() {
-			
 			}
-		
 		);
 	
 			var editIndex = undefined;
@@ -186,6 +184,20 @@
 	        //////////////////////////////////////////////////////
 	        var editIndex2 = undefined;
 	        
+		        function endEditing2(){		
+		        	alert("endEditing")  
+		         
+		        	if (editIndex2 == undefined){return true}
+		            if ($('#dg2').datagrid('validateRow', editIndex2)){
+		                $('#dg2').datagrid('endEdit', editIndex2);
+		                editIndex2 = undefined;
+		                return true;     // 수정 완료 후 커서가 row에서 빠져나옴
+
+		            } else {
+		                return false;   
+		            }
+		        }
+		        
 			 function onClickCell2(index, field){
 	            if (editIndex2 != index){
 	                if (endEditing2()){
@@ -205,37 +217,25 @@
 	        }
 	        
 			 
-		        function endEditing2(){		
-		        	alert("endEditing")  
-		         
-		        	if (editIndex2 == undefined){return true}
-		            if ($('#dg2').datagrid('validateRow', editIndex2)){
-		                $('#dg2').datagrid('endEdit', editIndex2);
-		                editIndex2 = undefined;
-		                return true;    
-		            } else {
-		                return false;   
-		            }
-		        }
 		        
 		        function onEndEdit2(index, row){
-	            	alert(JSON.stringify(row)); 
+	            	//alert(JSON.stringify(row)); 
 	            								
 	            
 	            if(row.status != "P"){
 	            	row.status= "U";
 	            }
-	            if(row.status =="P"){
-	            	row.com_id="None";
-	            }
-	            
-	        }
+	            else {
+	                row.com_id = "DB생성";
+	             }
+	         }
+
 		        
 		        function append2(){
 		            if (endEditing2()){
 		               // $('#dg2').datagrid('appendRow',{status:'P'});
 		               editIndex2=  selectedRow.index; //여기서 선택된것을 index를 
-		              	alert(editIndex2);
+		              //alert(editIndex2);
 		               
 		               //var selectedRow =  $('#dg2').datagrid('insertRow');
 		               
@@ -251,7 +251,7 @@
 		            		 parent_id : selectedRow.com_id,
 		            		 status : 'P'
 		            	 }
-		               })  
+		               });
 		               
 		               
 		               
@@ -290,24 +290,24 @@
 		        
 		        function save2(){
 		           
-		        	var appendRows = [];
-		        	var updateRows = [];
-		        	var deleteRows = [];
 		        	
 		        	var jsonDatas = {};
 		        	
-		        	if (endEditing()){ //니가 고친게 마무리 됐냐 ?true 면 시작 
+		        	if (endEditing2()){ //니가 고친게 마무리 됐냐 ?true 면 시작 
+		        	var appendRows = [];
+		        	var updateRows = [];
+		        	var deleteRows = [];
 		            	
 		            	var rows = $('#dg2').datagrid('getChanges');
 		            	
 		        	//item이 현재는 객체이다. 구조는 { grp_id : "", com_id : "", com_val:"", com_lvl:2 , parent_id : "", status:"U"} 
 		            	$.each(rows,
 		            		function(index,item){
-		            			if(rows.status=="P"){
+		            			if(item.status=="P"){
 		            				appendRows.push(item);
 		            				//[ {}, {} ]
 								}
-								else if(rows.status=="U"){
+								else if(item.status=="U"){
 									updateRows.push(item);
 								}
 								else {
@@ -315,31 +315,36 @@
 								}	
 		            		}		
 		            	);//each
+		                $('#dg2').datagrid('acceptChanges');
 		            	
 		            	jsonDatas.appendRows = appendRows; 
 		            	jsonDatas.updateRows = updateRows;
-		            	jsonDatas.deleteRows = deleteRows;
+		            	jsonDatas.deleteRows = deleteRows;  //1. 여기까지는 객체 
 		            	
-		            	var strJSON = JSON.stringify(jsonDatas);
-		            	alert(strJSON);
+		            	
+		            	var strJSON = JSON.stringify(jsonDatas); //2. 여기는 String 타입
+		            	alert("grpSaveAjax2"+strJSON);
 		            	grpSaveAjax2(strJSON);
 		            	
 		            	  
 		            	  
-		            	/*
+		            	/*  1.  2."" 벗겨진게 1.객체를 말함.
 		            	strJSON 형식이 json 
-		            	{ 
+		            	"{ 
 		            		appendRows : [ {},{} ],
 		            		updateRows : [ {},{} ],
 		            		deleteRows : [ {},{} ]
-		            	}
+		            	}"
 		            	
-		            	{ appendRows : [{},{}], updateRows : [{},{}], deleteRows:[{},{}]  }
+{ appendRows : [{},{}], updateRows : [{},{}], deleteRows:[{},{}]  }
+
+{
+"appendRows":[],"updateRows":[],
+"deleteRows":[{"grp_id":"GRP001","grp_name":"지역코드","status":"U"}]
+}
+		            	그럼 이거는 JSONObject로 넘어가는거고 save
 		            	
-		            	{"appendRows":[],"updateRows":[],"deleteRows":[{"grp_id":"GRP001","grp_name":"지역코드","status":"U"}]}
-		            	그럼 이거는 JSONObject로 넘어가는거고 
 		            	
-		            	여기는 
 		            	*/
 		            }//if
 		        }//function 
@@ -351,23 +356,15 @@
 		        		data : "jsonDatas="+jsonDatas,
 		        		
 		        		datatype: "json",//서버 갔다가 받아오는 데이터형식
-		        		success : function(jsonDatas){
+		        		success : function(datas){
 		        			$('#dg2').datagrid();
 		        		}
 		        		,
 		        		error : function(){
 		        			alert("grpSaveAjax error")
 		        		}
-		        		
-		        		
-		        		
-		        		
-		        		
 		        	});
-		        	
 		        }
-		       
-	      
 </script>
 
 </head>

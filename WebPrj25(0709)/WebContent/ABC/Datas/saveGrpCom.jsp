@@ -96,10 +96,10 @@
 		JSONObject obj = (JSONObject)deleteArr.get(i);
 	
 		strDeleteParams[0] = (String)obj.get("grp_id"); // strDeleteParams 너의 값은 뭐야? 는 이거야 
-	}
+	
 	
 		db.setUpdate(strDeleteProc,strDeleteParams);
-	
+	}
 	
 	
 	/* response.setContentType("Application/json");
