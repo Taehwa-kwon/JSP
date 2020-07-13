@@ -1,0 +1,34 @@
+방법 2가지 !!!
+서블릿 매핑(mapping) @WebServlet("/")         과                                          web.xml
+
+매핑을 하는 이유는 보안에 노출되어 있어서 그렇다 . 
+기존 경로가 http://localhost:8080/프로젝트명/servlet/패키지명.클래스명 이라고 자세히 나와있는 부분을 URL 매핑을 통해 http://localhost:8080/프로젝트명/URL명 으로 간단하게 변경 하는 것이다.
+
+방법 1. index.jsp / Students.java / students_list.jsp / Student.java 이렇게 4가지 파일
+
+
+
+
+
+	클라이언트   ----------------- WAS  
+	index   --request  ---  controller(Servlet) -----Model(Java bean) ------   DB
+			--Response ---  View (JSP) --------------|
+			
+클라이언트와 was 는 HTTP방식으로 통신한다.
+			
+클라이언트단이 index고     Controller(Servlet)이 Students.java 고    
+view 단이 students_list 가 되고
+DBCon 이 DAO 고 Student.java 가 DTO(VO)-ValueObject가 된다.  
+
+
+
+
+doget방식과 dopost방식의 차이점
+
+GET 방식으로 정보를 전달하면    URL에 ?user_id(변수)=test(입력 값)&user_pw(변수)=1234(입력 값) 이 URL에 포함되어 있다.
+POST 방식은 URL에 MAPPING된 정보만 표시된다.
+
+
+서블릿은  학생데이터를 가져오려면 클래스를 불러서  다시 메소드를 부르는데(doget, dopost, service) 이 세가지가 자동으로 실행된다.그래서 그 안에서 뭐 어떤것을 하려고.
+
+ 
