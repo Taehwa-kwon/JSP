@@ -1,0 +1,51 @@
+MVC Architecture란 ? 
+
+Model , View , Controller 분리한 디자인 패턴
+Model : 애플리케이션의 상태를 나타낸다. java Beans DAO를 통해 Mysql과 같은 Data Storage에 접근
+View  : JSP (HTML안의 자바코드)
+Controller  : View와 Model 사이의 인터페이스 역할  Servlet (자바코드안의 HTML)
+
+
+클
+라  ---1.Request---->    (Controller)Servlet ------->2| 
+이							|3(아래로)			    | 
+언  ---5.Response---     (View)Jsp			<4-----Model   ---(DBConnect)---EnterPrise Server
+트
+
+
+
+
+
+
+1단계  index.jsp에서 필요한 데이터들을 -> Controller에 다가 전부다 쏘고 다시 반환시켜준다.
+
+
+Form 태그에서도 name,value의 역할은 get방식이면 주소창에 localhost?name=value%name=value 가 되고
+index.jsp 에서도 a태그 안에서 ./Login?gubun=logout 이렇게 넘겨들어간다. 그럼 똑같은 내용임  
+
+
+시작은 Index.java에서 시작하고 service가 자동으로 실행되고 구분자에서 strGubun은 처음에 null 이니깐 if로 null로 빠져서 GoIndex로 간다. 그 다음에 setAttribute로 isSuc의 속성을 false 해주고 strURL 을 index.jsp로 출발한다. 
+2. index.jsp에서 <%%> << 여기안에서 isSuc가 false니깐 로그인 전 이라는게 문장이 뜬다.
+3. 그다음 로그인 버튼을 누르면 ./Index?gubun=login 을 가지고 Index.java로 넘어가고 쭉 반복되고 Members/login.jsp로 간다. setAttribute("isSuc", true);이고
+4. 그 다음에 login.jsp head안에 boolean안에 isSuc가 true니깐  성공이 된다.
+5. form 태그안에 input의 name을 4개의 name을 받아와서 Login.java로 넘어간다.doWork 하고 지금 gubun이 login이니깐 if문에서 Login메소드로 가고 쭉 진행되고 index.jsp로 넘어간다.
+6. index.jsp 에서 다시 테스트를 누르면 쭉쭉 진행된다.
+
+
+protected void GoLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	에서 request.setAttribute 안하면 단일값으로 아래를 통해서 전달할 수 있다.
+		RequestDispatcher dispatcher= request.getRequestDispatcher(strURL);
+		dispatcher.forward(request, response);
+		
+		근데 이렇게 하면 단일값만 전달되지 만약에 긴값인 경우에는 이렇게 전달하면 안되기 때문에 request.setAttribute로 전달한다.. 주소값을 넘기는거지 값을 넘겨주는게 아니다. 
+		String도 클래스 Class도 클래스. String A  는 String이라는 클래스를 A로 인스턴스해서 A.  < 해서 String에 관한 메소드를 사용 가능.
+		
+		
+7.사실 InitFilter.java 는 이해를 못해서 저까지는 못하겠다.
+		
+세션은 예를 들어서 로그인상태를 유지하는것을 말하는데 브라우저를 껏다키면 다시 초기화됌
+쿠기는 껏다켜도 저장되어있는것. 대부분이 모바일때문에 쿠키를 사용하고 있다.
+
+
+
+  
